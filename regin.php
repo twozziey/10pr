@@ -71,12 +71,18 @@
 				if(_login != "") {
 					if(_password != "") {
 						if(_password == _passwordCopy) {
+							var captcha = grecaptcha.getResponse();
+							if(captcha.length == 0) {
+								alert("Пройди капчу");
+								return;
+							}
 							loading.style.display = "block";
 							button.className = "button_diactive";
 							
 							var data = new FormData();
 							data.append("login", _login);
 							data.append("password", _password);
+							data.append('g-recaptcha-response', captcha);
 							
 							// AJAX запрос
 							$.ajax({
